@@ -1,0 +1,42 @@
+<!-- Burguer Type Section -->
+<form class="form-inline text-center">
+    <div class="container text-info">
+        <input class="form-control col-9" id="burguer_type" placeholder="Enter burguer type">
+        <button class="btn btn-primary btn-sm" id="submit" data-dismiss="modal">Submit</button>
+    </div>
+</form>
+
+
+<div class="container align-middle">
+    <h1 class="fontText">Burguers!</h1>
+
+    <div class="fontText">
+        <div class="row">
+            <div class="col">
+                <h2 class="fontText">Eated burguers!</h2>
+                <li>
+                    {{burguer_type}}
+                    <button class="change-status btn btn-primary btn-sm" data-id="{{id}}" data-newstatus="{{eat}}">
+                        {{#if eat}}EAT!{{/if}}
+                    </button>
+                </li>
+                <ul>
+                    {{#each burguers}} {{#unless eat}} {{> burguers/burguer-block is_eated=true}}
+                    <button id="eat" class="btn btn-primary btn-sm">Eat Me!</button>
+                    {{/unless}} {{/each}}
+                </ul>
+            </div>
+            <div class="col">
+                <h2 class="fontText">Not eated burguers!</h2>
+                <ul>
+                    {{#each burguers}} {{#if eat}} {{> burguers/burguer-block is_eated=false}}
+                    <button id="eat" class="btn btn-primary btn-sm">Eat Me!</button>
+                    {{/if}} {{/each}}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>

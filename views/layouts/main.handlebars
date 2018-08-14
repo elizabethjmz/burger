@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/assets/css/burguer_style.css" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <title> Burguer!</title>
+    <link rel="SHORTCUT ICON" href="https://cdn5.vectorstock.com/i/1000x1000/12/79/burger-vector-19791279.jpg">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Abel|Amaranth" rel="stylesheet">
+
+</head>
+
+<body style='background: url("https://www.toptal.com/designers/subtlepatterns/patterns/food.png")'>
+
+    <!-- Header -->
+    <div class="jumbotron align-middle fontText bg-warning">
+        <div class="align-middle text-center">
+            <img src="https://media0.giphy.com/media/xThtaoFef8EOe2J5XG/giphy.gif" height="100" width="100">
+        </div>
+        <h1 class="text-center text-danger">
+            <strong>Eat-Da-Burguer!</strong>
+        </h1>
+        <hr>
+        <p class="align-middle text-center fontText">Enter a burguer you want to eat then click on SUBMIT button</p>
+        
+    </div>
+    {{{ body }}}
+    
+
+    
+    
+
+    <!-- Validations modal -->
+    <div class="modal" tabindex="-1" role="dialog" id="error">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                </div>
+                <div class="modal-body align-items-center">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END OF VALIDATIONS MODAL -->
+
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#submit").on("click", function (event) {
+                
+                if ($("#burguer_type").val() == "") {
+                    event.preventDefault();
+                    $("#submit").attr("data-toggle", "modal");
+                    $("#submit").attr("data-target", "#error");
+                    $(".modal-header").empty();
+                    $(".modal-body").empty();
+                    $(".modal-body").append('<p id="error-message"></p>');
+                    $(".modal-header").prepend('<h5 class="modal-title" id="windowTitle"><i class="fas fa-exclamation-triangle" id="icon"> Oops!</i></h5>');
+                    $("#error-message").text("Please enter burguer type");
+                    $(".modal").hide();
+                }
+                else {
+                    var newBurguer = {
+                        burguer_type: $("#burguer_type").val().trim(),
+                        isEaten: false
+                    };
+
+                    // Send the POST request.
+                    $.ajax("/api/burguer", {
+                        type: "POST",
+                        data: newBurguer
+                    }).then(
+                        function () {
+                            console.log("New burguer has been added to the DB");
+                            // Reload the page to get the updated list
+                           location.reload();
+                        }
+                    );
+
+
+                }
+
+
+            });
+        });
+
+
+
+
+    </script>
+</body>
+
+</html>
